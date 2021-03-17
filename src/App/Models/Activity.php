@@ -1,6 +1,6 @@
 <?php
 
-namespace jeremykenedy\LaravelLogger\App\Models;
+namespace pncOrg\LaravelLogger\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -157,6 +157,6 @@ class Activity extends Model
      */
     public function getUserAgentDetailsAttribute()
     {
-        return \jeremykenedy\LaravelLogger\App\Http\Traits\UserAgentDetails::details($this->userAgent);
+        return \pncOrg\LaravelLogger\App\Http\Traits\UserAgentDetails::details($this->userAgent);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace jeremykenedy\LaravelLogger\App\Http\Traits;
+namespace pncOrg\LaravelLogger\App\Http\Traits;
 
 trait IpAddressDetails
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace jeremykenedy\LaravelLogger\App\Http\Middleware;
+namespace pncOrg\LaravelLogger\App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
+use pncOrg\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class LogActivity
 {

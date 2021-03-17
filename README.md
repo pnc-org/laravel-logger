@@ -125,8 +125,8 @@ Register the package with laravel in `bootstrap/app.php` with the following:
 ```php
     $app->register(\Jaybizzle\LaravelCrawlerDetect\LaravelCrawlerDetectServiceProvider::class);
     $app->configure('laravel-logger');
-    $app->register(\jeremykenedy\LaravelLogger\LaravelLoggerServiceProvider::class);
-    $app->routeMiddleware(['activity' => \jeremykenedy\LaravelLogger\App\Http\Middleware\LogActivity::class, ]);
+    $app->register(\pncOrg\LaravelLogger\LaravelLoggerServiceProvider::class);
+    $app->routeMiddleware(['activity' => \pncOrg\LaravelLogger\App\Http\Middleware\LogActivity::class, ]);
 ```
 
 3. Copy the configuration file [laravel-logger.php](src/config/laravel-logger.php) to your `config/` directory
@@ -162,7 +162,7 @@ LARAVEL_LOGGER_ROLES_ENABLED=true
 LARAVEL_LOGGER_ROLES_MIDDLWARE=role:admin
 LARAVEL_LOGGER_MIDDLEWARE_ENABLED=true
 LARAVEL_LOGGER_MIDDLEWARE_EXCEPT=
-LARAVEL_LOGGER_ACTIVITY_MODEL=jeremykenedy\LaravelLogger\App\Models\Activity
+LARAVEL_LOGGER_ACTIVITY_MODEL=pncOrg\LaravelLogger\App\Models\Activity
 LARAVEL_LOGGER_USER_MODEL=App\User
 LARAVEL_LOGGER_USER_ID_FIELD=id
 LARAVEL_LOGGER_DISABLE_ROUTES=false
@@ -220,7 +220,7 @@ To use the trait:
 1. Include the call in the head of your class file:
 
     ```php
-        use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
+        use pncOrg\LaravelLogger\App\Http\Traits\ActivityLogger;
     ```
 
 2. Include the trait call in the opening of your class:
@@ -261,7 +261,7 @@ If you are on an existing install, you will also need update your `laravel-logge
 You can then add the routes directly to your application's `routes/web.php` file, and customise as required.
 
 ```php
-Route::group(['prefix' => 'activity', 'namespace' => 'jeremykenedy\LaravelLogger\App\Http\Controllers', 'middleware' => ['web', 'auth', 'activity']], function () {
+Route::group(['prefix' => 'activity', 'namespace' => 'pncOrg\LaravelLogger\App\Http\Controllers', 'middleware' => ['web', 'auth', 'activity']], function () {
 
     // Dashboards
     Route::get('/', 'LaravelLoggerController@showAccessLog')->name('activity');
@@ -379,24 +379,4 @@ LARAVEL_LOGGER_SEARCH_ENABLE=true
     └── routes
         └── web.php
 ```
-
-* Tree command can be installed using brew: `brew install tree`
-* File tree generated using command `tree -a -I '.git|node_modules|vendor|storage|tests'`
-
-### Opening an Issue
-Before opening an issue there are a couple of considerations:
-* You are all awesome!
-* **Read the instructions** and make sure all steps were *followed correctly*.
-* **Check** that the issue is not *specific to your development environment* setup.
-* **Provide** *duplication steps*.
-* **Attempt to look into the issue**, and if you *have a solution, make a pull request*.
-* **Show that you have made an attempt** to *look into the issue*.
-* **Check** to see if the issue you are *reporting is a duplicate* of a previous reported issue.
-* **Following these instructions show me that you have tried.**
-* If you have a questions send me an email to jeremykenedy@gmail.com
-* Need some help, I can do my best on Slack: https://opensourcehelpgroup.slack.com
-* Please be considerate that this is an open source project that I provide to the community for FREE when opening an issue. 
-
-### License
-Laravel-logger is licensed under the MIT license. Enjoy!
 

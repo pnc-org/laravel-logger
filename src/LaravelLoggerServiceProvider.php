@@ -1,11 +1,11 @@
 <?php
 
-namespace jeremykenedy\LaravelLogger;
+namespace pncOrg\LaravelLogger;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use jeremykenedy\LaravelLogger\App\Http\Middleware\LogActivity;
+use pncOrg\LaravelLogger\App\Http\Middleware\LogActivity;
 
 class LaravelLoggerServiceProvider extends ServiceProvider
 {
@@ -26,31 +26,31 @@ class LaravelLoggerServiceProvider extends ServiceProvider
     protected $listeners = [
 
         'Illuminate\Auth\Events\Attempting' => [
-            'jeremykenedy\LaravelLogger\App\Listeners\LogAuthenticationAttempt',
+            'pncOrg\LaravelLogger\App\Listeners\LogAuthenticationAttempt',
         ],
 
         'Illuminate\Auth\Events\Authenticated' => [
-            'jeremykenedy\LaravelLogger\App\Listeners\LogAuthenticated',
+            'pncOrg\LaravelLogger\App\Listeners\LogAuthenticated',
         ],
 
         'Illuminate\Auth\Events\Login' => [
-            'jeremykenedy\LaravelLogger\App\Listeners\LogSuccessfulLogin',
+            'pncOrg\LaravelLogger\App\Listeners\LogSuccessfulLogin',
         ],
 
         'Illuminate\Auth\Events\Failed' => [
-            'jeremykenedy\LaravelLogger\App\Listeners\LogFailedLogin',
+            'pncOrg\LaravelLogger\App\Listeners\LogFailedLogin',
         ],
 
         'Illuminate\Auth\Events\Logout' => [
-            'jeremykenedy\LaravelLogger\App\Listeners\LogSuccessfulLogout',
+            'pncOrg\LaravelLogger\App\Listeners\LogSuccessfulLogout',
         ],
 
         'Illuminate\Auth\Events\Lockout' => [
-            'jeremykenedy\LaravelLogger\App\Listeners\LogLockout',
+            'pncOrg\LaravelLogger\App\Listeners\LogLockout',
         ],
 
         'Illuminate\Auth\Events\PasswordReset' => [
-            'jeremykenedy\LaravelLogger\App\Listeners\LogPasswordReset',
+            'pncOrg\LaravelLogger\App\Listeners\LogPasswordReset',
         ],
 
     ];

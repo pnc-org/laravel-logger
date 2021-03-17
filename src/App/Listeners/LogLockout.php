@@ -1,9 +1,9 @@
 <?php
 
-namespace jeremykenedy\LaravelLogger\App\Listeners;
+namespace pncOrg\LaravelLogger\App\Listeners;
 
 use Illuminate\Auth\Events\Lockout;
-use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
+use pncOrg\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class LogLockout
 {

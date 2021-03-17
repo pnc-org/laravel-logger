@@ -1,6 +1,6 @@
 <?php
 
-namespace jeremykenedy\LaravelLogger\App\Http\Controllers;
+namespace pncOrg\LaravelLogger\App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -8,8 +8,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use jeremykenedy\LaravelLogger\App\Http\Traits\IpAddressDetails;
-use jeremykenedy\LaravelLogger\App\Http\Traits\UserAgentDetails;
+use pncOrg\LaravelLogger\App\Http\Traits\IpAddressDetails;
+use pncOrg\LaravelLogger\App\Http\Traits\UserAgentDetails;
 
 class LaravelLoggerController extends BaseController
 {

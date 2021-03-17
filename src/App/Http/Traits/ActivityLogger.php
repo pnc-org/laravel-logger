@@ -1,6 +1,6 @@
 <?php
 
-namespace jeremykenedy\LaravelLogger\App\Http\Traits;
+namespace pncOrg\LaravelLogger\App\Http\Traits;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
