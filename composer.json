@@ -1,5 +1,5 @@
 {
-    "name": "jeremykenedy/laravel-logger",
+    "name": "pnc-org/laravel-logger",
     "description": "Laravel Logger Package",
     "keywords": [
             "Laravel activity",
@@ -12,8 +12,8 @@
     "type": "package",
     "authors": [
         {
-            "name": "jeremykenedy",
-            "email": "jeremykenedy@gmail.com"
+            "name": "notus",
+            "email": "info@notus.hr"
         }
     ],
     "minimum-stability": "dev",
