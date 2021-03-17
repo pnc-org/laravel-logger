@@ -16,7 +16,7 @@
             "email": "info@notus.hr"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=7.3.0|^8.0",
         "jaybizzle/laravel-crawler-detect": "1.*",
