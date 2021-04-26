@@ -1,16 +1,5 @@
-![Laravel Logger](https://github-project-images.s3-us-west-2.amazonaws.com/laravel-blocker/laravel-logger-logo.png)
-
 # Laravel Activity Logger
-Laravel logger is an activity event logger for your Laravel or Lumen application. It comes out the box with ready to use with dashboard to view your activity. Laravel logger can be added as a middleware or called through a trait. Easily have an Activity Log. This package is easily configurable and customizable. Supports Laravel 5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 6, and 7+
-
-[![Latest Stable Version](https://poser.pugx.org/jeremykenedy/laravel-logger/v/stable)](https://packagist.org/packages/jeremykenedy/laravel-logger)
-[![Total Downloads](https://poser.pugx.org/jeremykenedy/laravel-logger/downloads)](https://packagist.org/packages/jeremykenedy/laravel-logger)
-[![Travis-CI Build](https://travis-ci.org/jeremykenedy/laravel-logger.svg?branch=master)](https://travis-ci.org/jeremykenedy/laravel-logger)
-<a href="https://styleci.io/repos/109630720">
-    <img src="https://styleci.io/repos/109630720/shield?branch=master" alt="StyleCI" style="border-radius: 3px;">
-</a>
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jeremykenedy/laravel-logger/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jeremykenedy/laravel-logger/?branch=master)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Laravel logger is an activity event logger for your Laravel. It comes out the box with ready to use with dashboard to view your activity. Laravel logger can be added as a middleware or called through a trait. Easily have an Activity Log. This package is easily configurable and customizable. Supports Laravel 5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 6, and 7+
 
 #### Table of contents
 - [Features](#features)
@@ -76,7 +65,7 @@ Laravel logger can work out the box with or without the following roles packages
 1. From your projects root folder in terminal run:
 
 ```bash
-    composer require jeremykenedy/laravel-logger
+    composer require pnc-org/laravel-logger
 ```
 
 2. Register the package
@@ -89,7 +78,7 @@ Register the package with laravel in `config/app.php` under `providers` with the
 
 ```php
     'providers' => [
-        jeremykenedy\LaravelLogger\LaravelLoggerServiceProvider::class,
+        pnc-org\LaravelLogger\LaravelLoggerServiceProvider::class,
     ];
 ```
 
@@ -110,42 +99,6 @@ Register the package with laravel in `config/app.php` under `providers` with the
 ```
 
 ### Lumen Installation Instructions
-##### This installs laravel-logger without the GUI
-
-1. From your projects root folder in terminal run:
-
-```bash
-    composer require jeremykenedy/laravel-logger
-```
-
-2. Register the package
-
-Register the package with laravel in `bootstrap/app.php` with the following:
-
-```php
-    $app->register(\Jaybizzle\LaravelCrawlerDetect\LaravelCrawlerDetectServiceProvider::class);
-    $app->configure('laravel-logger');
-    $app->register(\pncOrg\LaravelLogger\LaravelLoggerServiceProvider::class);
-    $app->routeMiddleware(['activity' => \pncOrg\LaravelLogger\App\Http\Middleware\LogActivity::class, ]);
-```
-
-3. Copy the configuration file [laravel-logger.php](src/config/laravel-logger.php) to your `config/` directory
-
-##### Set LARAVEL_LOGGER_DISABLE_ROUTES=true in your .env file!
-
-
-4. Run the migration to add the table to record the activities to:
-
-```php
-    php artisan migrate
-```
-
-* Note: If you want to specify a different table or connection make sure you update your `.env` file with the needed configuration variables.
-
-5. Optionally Update your `.env` file and associated settings (see [Environment File](#environment-file) section)
-
-
-
 
 ### Configuration
 Laravel Activity Logger can be configured in directly in `/config/laravel-logger.php` if you published the assets.
@@ -305,78 +258,3 @@ LARAVEL_LOGGER_SEARCH_ENABLE=true
 ![success-destroy](https://s3-us-west-2.amazonaws.com/github-project-images/laravel-logger/7-success-destroy.jpg)
 ![success-restored](https://s3-us-west-2.amazonaws.com/github-project-images/laravel-logger/8-success-restored.jpg)
 ![cleared-drilldown](https://s3-us-west-2.amazonaws.com/github-project-images/laravel-logger/9-cleared-drilldown.jpg)
-
-### File Tree
-
-```bash
-├── .env.travis
-├── .gitignore
-├── .travis.yml
-├── CODE_OF_CONDUCT.md
-├── LICENSE
-├── README.md
-├── composer.json
-└── src
-    ├── .env.example
-    ├── LaravelLoggerServiceProvider.php
-    ├── app
-    │   ├── Http
-    │   │   ├── Controllers
-    │   │   │   └── LaravelLoggerController.php
-    │   │   ├── Middleware
-    │   │   │   └── LogActivity.php
-    │   │   └── Traits
-    │   │       ├── ActivityLogger.php
-    │   │       ├── IpAddressDetails.php
-    │   │       └── UserAgentDetails.php
-    │   ├── Listeners
-    │   │   ├── LogAuthenticated.php
-    │   │   ├── LogAuthenticationAttempt.php
-    │   │   ├── LogFailedLogin.php
-    │   │   ├── LogLockout.php
-    │   │   ├── LogPasswordReset.php
-    │   │   ├── LogSuccessfulLogin.php
-    │   │   └── LogSuccessfulLogout.php
-    │   ├── Logic
-    │   │   └── helpers.php
-    │   └── Models
-    │       └── Activity.php
-    ├── config
-    │   └── laravel-logger.php
-    ├── database
-    │   └── migrations
-    │       └── 2017_11_04_103444_create_laravel_logger_activity_table.php
-    ├── resources
-    │   ├── lang
-    │   │   ├── de
-    │   │   │   └── laravel-logger.php
-    │   │   └── en
-    │   │       └── laravel-logger.php
-    │   └── views
-    │       ├── forms
-    │       │   ├── clear-activity-log.blade.php
-    │       │   ├── delete-activity-log.blade.php
-    │       │   └── restore-activity-log.blade.php
-    │       ├── logger
-    │       │   ├── activity-log-cleared.blade.php
-    │       │   ├── activity-log-item.blade.php
-    │       │   ├── activity-log.blade.php
-    │       │   └── partials
-    │       │       └── activity-table.blade.php
-    │       ├── modals
-    │       │   └── confirm-modal.blade.php
-    │       ├── partials
-    │       │   ├── form-search.blade.php
-    │       │   ├── form-status.blade.php
-    │       │   ├── scripts.blade.php
-    │       │   └── styles.blade.php
-    │       └── scripts
-    │           ├── add-title-attribute.blade.php
-    │           ├── clickable-row.blade.php
-    │           ├── confirm-modal.blade.php
-    │           ├── datatables.blade.php
-    │           └── tooltip.blade.php
-    └── routes
-        └── web.php
-```
-
