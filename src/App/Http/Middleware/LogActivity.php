@@ -18,10 +18,10 @@ class LogActivity
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $description = null)
+    public function handle(Request $request, Closure $next, $description = null)
     {
         if (config('LaravelLogger.loggerMiddlewareEnabled') && $this->shouldLog($request)) {
-            ActivityLogger::activity($description);
+            ActivityLogger::activity($description,json_encode($request->all()));
         }
 
         return $next($request);
