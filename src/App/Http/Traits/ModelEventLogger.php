@@ -5,6 +5,7 @@ namespace pncOrg\LaravelLogger\App\Http\Traits;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use pncOrg\LaravelLogger\App\Models\Activity;
 use ReflectionClass;
 
 /**
@@ -46,31 +47,12 @@ trait ModelEventLogger
 						'methodType'    => Request::method(),
 					];
 
-					self::storeActivity($data);
+					Activity::create($data);
+
 				} catch (\Exception $e) {
 					return true;
 				}
 			});
-		}
-
-	}
-
-	/**
-	 * Store activity entry to database.
-	 *
-	 * @param array $data
-	 *
-	 * @return void
-	 * @throws \Exception
-	 */
-	private static function storeActivity($data)
-	{
-		try{
-
-			config('laravel-logger.defaultActivityModel')::create($data);
-
-		}catch (\Exception $e){
-			throw $e;
 		}
 
 	}
