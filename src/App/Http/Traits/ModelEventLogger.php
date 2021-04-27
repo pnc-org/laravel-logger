@@ -9,7 +9,6 @@ use ReflectionClass;
 
 /**
  * Class ModelEventLogger
- *
  *  Automatically Log Add, Update, Delete events of Model.
  */
 trait ModelEventLogger
