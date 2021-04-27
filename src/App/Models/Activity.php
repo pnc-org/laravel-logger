@@ -66,6 +66,8 @@ class Activity extends Model
         'locale',
         'referer',
         'methodType',
+		'contentId',
+		'contentType',
     ];
 
     protected $casts = [
@@ -77,6 +79,8 @@ class Activity extends Model
         'userAgent'     => 'string',
         'locale'        => 'string',
         'referer'       => 'string',
+        'methodType'    => 'string',
+        'contentId'    => 'string',
         'methodType'    => 'string',
     ];
 

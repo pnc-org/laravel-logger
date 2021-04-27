@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use ReflectionClass;
 
+/**
+ * Class ModelEventLogger
+ *
+ *  Automatically Log Add, Update, Delete events of Model.
+ */
 trait ModelEventLogger
 {
 	/**
@@ -33,6 +38,8 @@ trait ModelEventLogger
 						'details'       => json_encode($model->getDirty()),
 						'userType'      => $userType,
 						'userId'        => $userId,
+						'contentId'   	=> $model->id,
+						'contentType' 	=> get_class($model),
 						'route'         => Request::fullUrl(),
 						'ipAddress'     => Request::ip(),
 						'locale'        => Request::header('accept-language'),
