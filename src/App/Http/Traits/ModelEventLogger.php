@@ -4,44 +4,70 @@ namespace pncOrg\LaravelLogger\App\Http\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
+use ReflectionClass;
 
 trait ModelEventLogger
 {
+	/**
+	 * Automatically boot with Model, and register Events handler.
+	 */
+	protected static function bootModelEventLogger()
+	{
+		foreach (static::getRecordActivityEvents() as $eventName) {
+			static::$eventName(function (Model $model) use ($eventName) {
+				try {
+					$reflect = new ReflectionClass($model);
 
-    /**
-     * Automatically boot with Model, and register Events handler.
-     */
-    protected static function bootModelEventLogger()
-    {
+					$userType = trans('LaravelLogger::laravel-logger.userTypes.externalSource');
+					$userId = null;
 
-        foreach (static::getRecordActivityEvents() as $eventName) {
-            static::$eventName(function (Model $model) use ($eventName) {
-                try {
-                    $reflect = new \ReflectionClass($model);
-                    $data = [
-                        'user_id'     => Auth::user()->id,
-                        'contentId'   => $model->id,
-                        'contentType' => get_class($model),
-                        'action'      => static::getActionName($eventName),
-                        'description' => ucfirst($eventName) . " a " . $reflect->getShortName(),
-                        'details'     => json_encode($model->getDirty())
-                    ];
-                    ActivityLogger::activity(ucfirst($eventName) . " a " . $reflect->getShortName(),json_encode($model->getDirty()));
-                    /*return Activity::create([
-                        'user_id'     => \Auth::user()->id,
-                        'contentId'   => $model->id,
-                        'contentType' => get_class($model),
-                        'action'      => static::getActionName($eventName),
-                        'description' => ucfirst($eventName) . " a " . $reflect->getShortName(),
-                        'details'     => json_encode($model->getDirty())
-                    ]);
-                    */
-                } catch (\Exception $e) {
-                    return true;
-                }
-            });
-        }
-    }
+					if (Auth::check()) {
+						$userType = trans('LaravelLogger::laravel-logger.userTypes.registered');
+						$userIdField = config('LaravelLogger.defaultUserIDField');
+						$userId = Request::user()->{$userIdField};
+					}
+
+					$data = [
+						'description'   => ucfirst($eventName) . " a " . $reflect->getShortName(),
+						'details'       => json_encode($model->getDirty()),
+						'userType'      => $userType,
+						'userId'        => $userId,
+						'route'         => Request::fullUrl(),
+						'ipAddress'     => Request::ip(),
+						'locale'        => Request::header('accept-language'),
+						'referer'       => Request::header('referer'),
+						'methodType'    => Request::method(),
+					];
+
+					self::storeActivity($data);
+				} catch (\Exception $e) {
+					return true;
+				}
+			});
+		}
+
+	}
+
+	/**
+	 * Store activity entry to database.
+	 *
+	 * @param array $data
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
+	private static function storeActivity($data)
+	{
+		try{
+
+			config('laravel-logger.defaultActivityModel')::create($data);
+
+		}catch (\Exception $e){
+			throw $e;
+		}
+
+	}
 
     /**
      * Set the default events to be recorded if the $recordEvents
