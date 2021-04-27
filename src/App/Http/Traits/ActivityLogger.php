@@ -67,7 +67,6 @@ trait ActivityLogger
             'userId'        => $userId,
             'route'         => Request::fullUrl(),
             'ipAddress'     => Request::ip(),
-            'userAgent'     => Request::header('user-agent'),
             'locale'        => Request::header('accept-language'),
             'referer'       => Request::header('referer'),
             'methodType'    => Request::method(),
