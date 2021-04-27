@@ -11,6 +11,7 @@ return [
         'guest'      => 'Guest',
         'registered' => 'Registered',
         'crawler'    => 'Crawler',
+		'externalSource' => 'ExternalSource',
     ],
 
     'verbTypes' => [
