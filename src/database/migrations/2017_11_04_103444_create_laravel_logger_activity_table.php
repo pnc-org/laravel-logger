@@ -30,6 +30,8 @@ class CreateLaravelLoggerActivityTable extends Migration
                 $table->ipAddress('ipAddress')->nullable();
                 $table->text('userAgent')->nullable();
                 $table->string('locale')->nullable();
+                $table->bigInteger('contentId')->nullable();
+                $table->string('contentType')->nullable();
                 $table->longText('referer')->nullable();
                 $table->string('methodType')->nullable();
                 $table->timestamps();
@@ -37,7 +39,6 @@ class CreateLaravelLoggerActivityTable extends Migration
             });
         }
     }
-
     /**
      * Reverse the migrations.
      *

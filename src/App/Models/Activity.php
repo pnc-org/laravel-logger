@@ -81,7 +81,7 @@ class Activity extends Model
         'referer'       => 'string',
         'methodType'    => 'string',
         'contentId'    => 'string',
-        'methodType'    => 'string',
+        'contentType'    => 'string',
     ];
 
     /**
