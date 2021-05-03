@@ -68,7 +68,12 @@ class LaravelLoggerController extends BaseController
     public function showAccessLog(Request $request)
     {
         if (config('LaravelLogger.loggerPaginationEnabled')) {
-            $activities = config('laravel-logger.defaultActivityModel')::orderBy('created_at', 'desc');
+            if (config('LaravelLogger.hideLogRequest')){
+                $activities = config('laravel-logger.defaultActivityModel')::whereNotNull('contentId')->where('userType','Registered')->orderBy('created_at', 'desc');
+            }else{
+                $activities = config('laravel-logger.defaultActivityModel')::orderBy('created_at', 'desc');
+            }
+
             if (config('LaravelLogger.enableSearch')) {
                 $activities = $this->searchActivityLog($activities, $request);
             }
@@ -117,14 +122,29 @@ class LaravelLoggerController extends BaseController
         $timePassed = $eventTime->diffForHumans();
 
         if (config('LaravelLogger.loggerPaginationEnabled')) {
-            $userActivities = config('laravel-logger.defaultActivityModel')::where('userId', $activity->userId)
-            ->orderBy('created_at', 'desc')
-            ->paginate(config('LaravelLogger.loggerPaginationPerPage'));
+            if (config('LaravelLogger.hideLogRequest')){
+                $userActivities = config('laravel-logger.defaultActivityModel')::whereNotNull('contentId')->where('userType','Registered')->where('userId', $activity->userId)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(config('LaravelLogger.loggerPaginationPerPage'));
+            }else{
+                $userActivities = config('laravel-logger.defaultActivityModel')::where('userId', $activity->userId)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(config('LaravelLogger.loggerPaginationPerPage'));
+
+            }
             $totalUserActivities = $userActivities->total();
+
         } else {
-            $userActivities = config('laravel-logger.defaultActivityModel')::where('userId', $activity->userId)
-            ->orderBy('created_at', 'desc')
-            ->get();
+            if (config('LaravelLogger.hideLogRequest')){
+                $userActivities = config('laravel-logger.defaultActivityModel')::whereNotNull('contentId')->where('userType','Registered')->where('userId', $activity->userId)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(config('LaravelLogger.loggerPaginationPerPage'));
+            }else{
+                $userActivities = config('laravel-logger.defaultActivityModel')::where('userId', $activity->userId)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(config('LaravelLogger.loggerPaginationPerPage'));
+                $totalUserActivities = $userActivities->count();
+            }
             $totalUserActivities = $userActivities->count();
         }
 

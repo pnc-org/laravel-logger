@@ -60,17 +60,18 @@ trait ActivityLogger
             $description = $verb.' '.Request::path();
         }
 
-        $data = [
-            'description'   => $description,
-            'details'       => $details,
-            'userType'      => $userType,
-            'userId'        => $userId,
-            'route'         => Request::fullUrl(),
-            'ipAddress'     => Request::ip(),
-            'locale'        => Request::header('accept-language'),
-            'referer'       => Request::header('referer'),
-            'methodType'    => Request::method(),
-        ];
+		$data = [
+			'description'   => $description,
+			'details'       => $details,
+			'userType'      => $userType,
+			'userId'        => $userId,
+			'route'         => Request::fullUrl(),
+			'ipAddress'     => Request::ip(),
+			'userAgent'     => Request::header('user-agent'),
+			'locale'        => Request::header('accept-language'),
+			'referer'       => Request::header('referer'),
+			'methodType'    => Request::method(),
+		];
 
         // Validation Instance
         $validator = Validator::make($data, config('laravel-logger.defaultActivityModel')::rules());

@@ -4,143 +4,123 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Laravel Logger Language Lines - Global
+	| Laravel Logger Database Settings
 	|--------------------------------------------------------------------------
 	*/
-	'userTypes' => [
-		'guest'      => 'Guest',
-		'registered' => 'Registered',
-		'crawler'    => 'Crawler',
-		'externalSource' => 'ExternalSource',
-	],
 
-	'verbTypes' => [
-		'created'    => 'Created',
-		'edited'     => 'Edited',
-		'deleted'    => 'Deleted',
-		'viewed'     => 'Viewed',
-		'crawled'    => 'crawled',
-	],
-
-	'tooltips' => [
-		'viewRecord' => 'View Record Details',
-	],
+	'loggerDatabaseConnection'  => env('LARAVEL_LOGGER_DATABASE_CONNECTION', env('DB_CONNECTION', 'mysql')),
+	'loggerDatabaseTable'       => env('LARAVEL_LOGGER_DATABASE_TABLE', 'laravel_logger_activity'),
 
 	/*
 	|--------------------------------------------------------------------------
-	| Laravel Logger Admin Dashboard Language Lines
+	| Laravel Logger Roles Settings - (laravel roles not required if false)
 	|--------------------------------------------------------------------------
 	*/
-	'dashboard' => [
-		'title'     => 'Activity Log',
-		'subtitle'  => 'Events',
 
-		'labels'    => [
-			'id'            => 'Id',
-			'time'          => 'Time',
-			'description'   => 'Description',
-			'user'          => 'User',
-			'modelId'       => 'ID',
-			'method'        => 'Method',
-			'route'         => 'Route',
-			'ipAddress'     => 'Ip <span class="hidden-sm hidden-xs">Address</span>',
-			'deleteDate'    => '<span class="hidden-sm hidden-xs">Date </span>Deleted',
-		],
-
-		'menu'      => [
-			'alt'           => 'Activity Log Menu',
-			'clear'         => 'Clear Activity Log',
-			'show'          => 'Show Cleared Logs',
-			'back'          => 'Back to Activity Log',
-		],
-
-		'search'    => [
-			'all'           => 'All',
-			'search'        => 'Search',
-		],
-	],
+	'rolesEnabled'   => env('LARAVEL_LOGGER_ROLES_ENABLED', false),
+	'rolesMiddlware' => env('LARAVEL_LOGGER_ROLES_MIDDLWARE', false),
 
 	/*
 	|--------------------------------------------------------------------------
-	| Laravel Logger Admin Drilldown Language Lines
+	| Enable/Disable Laravel Logger Middlware
 	|--------------------------------------------------------------------------
 	*/
 
-	'drilldown' => [
-		'title'                 => 'Activity Log :id',
-		'title-details'         => 'Activity Details',
-		'title-ip-details'      => 'Ip Address Details',
-		'title-user-details'    => 'User Details',
-		'title-user-activity'   => 'Additional User Activity',
-
-		'buttons'   => [
-			'back'      => '<span class="hidden-xs hidden-sm">Back to </span><span class="hidden-xs">Activity Log</span>',
-		],
-
-		'labels' => [
-			'userRoles'     => 'User Roles',
-			'userLevel'     => 'Level',
-		],
-
-		'list-group' => [
-			'labels'    => [
-				'id'            => 'Activity Log ID:',
-				'ip'            => 'Ip Address',
-				'description'   => 'Description',
-				'details'       => 'Details',
-				'userType'      => 'User Type',
-				'userId'        => 'User Id',
-				'route'         => 'Route',
-				'agent'         => 'User Agent',
-				'locale'        => 'Locale',
-				'referer'       => 'Referer',
-
-				'methodType'    => 'Method Type',
-				'createdAt'     => 'Event Time',
-				'updatedAt'     => 'Updated At',
-				'deletedAt'     => 'Deleted At',
-				'timePassed'    => 'Time Passed',
-				'userName'      => 'Username',
-				'userFirstName' => 'First Name',
-				'userLastName'  => 'Last Name',
-				'userFulltName' => 'Full Name',
-				'userEmail'     => 'User Email',
-				'userSignupIp'  => 'Signup Ip',
-				'userCreatedAt' => 'Created',
-				'userUpdatedAt' => 'Updated',
-			],
-
-			'fields' => [
-				'none' => 'None',
-			],
-		],
-
-	],
+	'loggerMiddlewareEnabled'   => env('LARAVEL_LOGGER_MIDDLEWARE_ENABLED', true),
+	'loggerMiddlewareExcept'    => array_filter(explode(',', trim(env('LARAVEL_LOGGER_MIDDLEWARE_EXCEPT')))),
 
 	/*
 	|--------------------------------------------------------------------------
-	| Laravel Logger Modals
+	| Laravel Logger Authentication Listeners Enable/Disable
+	|--------------------------------------------------------------------------
+	*/
+	'logAllAuthEvents'      => false,   // May cause a lot of duplication.
+	'logAuthAttempts'       => false,   // Successful and Failed -  May cause a lot of duplication.
+	'logFailedAuthAttempts' => true,    // Failed Logins
+	'logLockOut'            => true,    // Account Lockout
+	'logPasswordReset'      => true,    // Password Resets
+	'logSuccessfulLogin'    => true,    // Successful Login
+	'logSuccessfulLogout'   => true,    // Successful Logout
+
+	/*
+	|--------------------------------------------------------------------------
+	| Laravel Logger Search Enable/Disable
+	|--------------------------------------------------------------------------
+	*/
+	'enableSearch'      => env('LARAVEL_LOGGER_ENABLE_SEARCH', 'false'),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Laravel Logger Search Parameters
+	|--------------------------------------------------------------------------
+	*/
+	// you can add or remove from these options [description,user,method,route,ip]
+	'searchFields'  => env('LARAVEL_LOGGER_SEARCH_FIELDS', 'description,user,method,route,ip'),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Laravel Default Models
 	|--------------------------------------------------------------------------
 	*/
 
-	'modals' => [
-		'shared' => [
-			'btnCancel'     => 'Cancel',
-			'btnConfirm'    => 'Confirm',
-		],
-		'clearLog' => [
-			'title'     => 'Clear Activity Log',
-			'message'   => 'Are you sure you want to clear the activity log?',
-		],
-		'deleteLog' => [
-			'title'     => 'Permanently Delete Activity Log',
-			'message'   => 'Are you sure you want to permanently DELETE the activity log?',
-		],
-		'restoreLog' => [
-			'title'     => 'Restore Cleared Activity Log',
-			'message'   => 'Are you sure you want to restore the cleared activity logs?',
-		],
-	],
+	'defaultActivityModel' => env('LARAVEL_LOGGER_ACTIVITY_MODEL', 'pncOrg\LaravelLogger\App\Models\Activity'),
+	'defaultUserModel'     => env('LARAVEL_LOGGER_USER_MODEL', 'App\Models\User'),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Laravel Default User ID Field
+	|--------------------------------------------------------------------------
+	*/
+
+	'defaultUserIDField' => env('LARAVEL_LOGGER_USER_ID_FIELD', 'id'),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Disable automatic Laravel Logger routes
+	| If you want to customise the routes the package uses, set this to true.
+	| For more information, see the README.
+	|--------------------------------------------------------------------------
+	*/
+
+	'disableRoutes' => env('LARAVEL_LOGGER_DISABLE_ROUTES', false),
+
+	'hideLogRequest' => env('LARAVEL_LOGGER_DISABLE_LOG_REQUEST', true),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Laravel Logger Pagination Settings
+	|--------------------------------------------------------------------------
+	*/
+	'loggerPaginationEnabled' => env('LARAVEL_LOGGER_PAGINATION_ENABLED', true),
+	'loggerPaginationPerPage' => env('LARAVEL_LOGGER_PAGINATION_PER_PAGE', 25),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Laravel Logger Databales Settings - Not recommended with pagination.
+	|--------------------------------------------------------------------------
+	*/
+
+	'loggerDatatables'              => env('LARAVEL_LOGGER_DATATABLES_ENABLED', false),
+	'loggerDatatablesCSScdn'        => 'https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css',
+	'loggerDatatablesJScdn'         => 'https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js',
+	'loggerDatatablesJSVendorCdn'   => 'https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Laravel Logger Dashboard Settings
+	|--------------------------------------------------------------------------
+	*/
+
+	'enableSubMenu'     => env('LARAVEL_LOGGER_DASHBOARD_MENU_ENABLED', true),
+	'enableDrillDown'   => env('LARAVEL_LOGGER_DASHBOARD_DRILLABLE', true),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Laravel Logger Failed to Log Settings
+	|--------------------------------------------------------------------------
+	*/
+
+	'logDBActivityLogFailuresToFile' => env('LARAVEL_LOGGER_LOG_RECORD_FAILURES_TO_FILE', true),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -148,35 +128,50 @@ return [
 	|--------------------------------------------------------------------------
 	*/
 
-	'messages' => [
-		'logClearedSuccessfuly'   => 'Activity log cleared successfully',
-		'logDestroyedSuccessfuly' => 'Activity log deleted successfully',
-		'logRestoredSuccessfuly'  => 'Activity log restored successfully',
-	],
+	'enablePackageFlashMessageBlade' => env('LARAVEL_LOGGER_FLASH_MESSAGE_BLADE_ENABLED', true),
 
 	/*
 	|--------------------------------------------------------------------------
-	| Laravel Logger Cleared Dashboard Language Lines
+	| Blade settings
 	|--------------------------------------------------------------------------
 	*/
 
-	'dashboardCleared' => [
-		'title'     => 'Cleared Activity Logs',
-		'subtitle'  => 'Cleared Events',
+	// The parent Blade file
+	'loggerBladeExtended'       => env('LARAVEL_LOGGER_LAYOUT', 'layout.default'),
 
-		'menu'      => [
-			'deleteAll'  => 'Delete All Activity Logs',
-			'restoreAll' => 'Restore All Activity Logs',
-		],
-	],
+	// Switch Between bootstrap 3 `panel` and bootstrap 4 `card` classes
+	'bootstapVersion'           => env('LARAVEL_LOGGER_BOOTSTRAP_VERSION', '4'),
+
+	// Additional Card classes for styling -
+	// See: https://getbootstrap.com/docs/4.0/components/card/#background-and-color
+	// Example classes: 'text-white bg-primary mb-3'
+	'bootstrapCardClasses'      => '',
+
+	// Blade Extension Placement
+	'bladePlacement'            => env('LARAVEL_LOGGER_BLADE_PLACEMENT', 'yield'),
+	'bladePlacementCss'         => env('LARAVEL_LOGGER_BLADE_PLACEMENT_CSS', 'template_linked_css'),
+	'bladePlacementJs'          => env('LARAVEL_LOGGER_BLADE_PLACEMENT_JS', 'footer_scripts'),
 
 	/*
 	|--------------------------------------------------------------------------
-	| Laravel Logger Pagination Language Lines
+	| Laravel Logger Dependencies - allows for easier builds into other projects
 	|--------------------------------------------------------------------------
 	*/
-	'pagination' => [
-		'countText' => 'Showing :firstItem - :lastItem of :total results <small>(:perPage per page)</small>',
-	],
+
+	// jQuery
+	'enablejQueryCDN'           => env('LARAVEL_LOGGER_JQUERY_CDN_ENABLED', false),
+	'JQueryCDN'                 => env('LARAVEL_LOGGER_JQUERY_CDN_URL', 'https://code.jquery.com/jquery-3.2.1.slim.min.js'),
+
+	// Bootstrap
+	'enableBootstrapCssCDN'     => env('LARAVEL_LOGGER_BOOTSTRAP_CSS_CDN_ENABLED', false),
+	'bootstrapCssCDN'           => env('LARAVEL_LOGGER_BOOTSTRAP_CSS_CDN_URL', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'),
+	'enableBootstrapJsCDN'      => env('LARAVEL_LOGGER_BOOTSTRAP_JS_CDN_ENABLED', false),
+	'bootstrapJsCDN'            => env('LARAVEL_LOGGER_BOOTSTRAP_JS_CDN_URL', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'),
+	'enablePopperJsCDN'         => env('LARAVEL_LOGGER_POPPER_JS_CDN_ENABLED', false),
+	'popperJsCDN'               => env('LARAVEL_LOGGER_POPPER_JS_CDN_URL', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'),
+
+	// Font Awesome
+	'enableFontAwesomeCDN'      => env('LARAVEL_LOGGER_FONT_AWESOME_CDN_ENABLED', false),
+	'fontAwesomeCDN'            => env('LARAVEL_LOGGER_FONT_AWESOME_CDN_URL', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'),
 
 ];
