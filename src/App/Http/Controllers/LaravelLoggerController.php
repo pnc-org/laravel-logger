@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 use pncOrg\LaravelLogger\App\Http\Traits\IpAddressDetails;
 use pncOrg\LaravelLogger\App\Http\Traits\UserAgentDetails;
@@ -60,16 +61,18 @@ class LaravelLoggerController extends BaseController
         return $collectionItems;
     }
 
-    /**
-     * Show the activities log dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+	/**
+	 * Show the activities log dashboard.
+	 *
+	 * @param Request $request
+	 *
+	 * @return Response
+	 */
     public function showAccessLog(Request $request)
     {
         if (config('LaravelLogger.loggerPaginationEnabled')) {
             if (config('LaravelLogger.hideLogRequest')){
-                $activities = config('laravel-logger.defaultActivityModel')::whereNotNull('contentId')->where('userType','Registered')->orderBy('created_at', 'desc');
+                $activities = config('laravel-logger.defaultActivityModel')::whereNotNull('contentId')->whereIn('userType',['Registered'])->orderBy('created_at', 'desc');
             }else{
                 $activities = config('laravel-logger.defaultActivityModel')::orderBy('created_at', 'desc');
             }
@@ -108,7 +111,7 @@ class LaravelLoggerController extends BaseController
      * @param Request $request
      * @param int     $id
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function showAccessLogEntry(Request $request, $id)
     {
@@ -123,7 +126,7 @@ class LaravelLoggerController extends BaseController
 
         if (config('LaravelLogger.loggerPaginationEnabled')) {
             if (config('LaravelLogger.hideLogRequest')){
-                $userActivities = config('laravel-logger.defaultActivityModel')::whereNotNull('contentId')->where('userType','Registered')->where('userId', $activity->userId)
+                $userActivities = config('laravel-logger.defaultActivityModel')::whereNotNull('contentId')->whereIn('userType',['Registered'])->where('userId', $activity->userId)
                     ->orderBy('created_at', 'desc')
                     ->paginate(config('LaravelLogger.loggerPaginationPerPage'));
             }else{
@@ -136,14 +139,13 @@ class LaravelLoggerController extends BaseController
 
         } else {
             if (config('LaravelLogger.hideLogRequest')){
-                $userActivities = config('laravel-logger.defaultActivityModel')::whereNotNull('contentId')->where('userType','Registered')->where('userId', $activity->userId)
+                $userActivities = config('laravel-logger.defaultActivityModel')::whereNotNull('contentId')->whereIn('userType',['Registered'])->where('userId', $activity->userId)
                     ->orderBy('created_at', 'desc')
                     ->paginate(config('LaravelLogger.loggerPaginationPerPage'));
             }else{
                 $userActivities = config('laravel-logger.defaultActivityModel')::where('userId', $activity->userId)
                     ->orderBy('created_at', 'desc')
                     ->paginate(config('LaravelLogger.loggerPaginationPerPage'));
-                $totalUserActivities = $userActivities->count();
             }
             $totalUserActivities = $userActivities->count();
         }
@@ -170,7 +172,7 @@ class LaravelLoggerController extends BaseController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function clearActivityLog(Request $request)
     {
@@ -185,7 +187,7 @@ class LaravelLoggerController extends BaseController
     /**
      * Show the cleared activity log - softdeleted records.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function showClearedActivityLog()
     {
@@ -217,7 +219,7 @@ class LaravelLoggerController extends BaseController
      * @param Request $request
      * @param int     $id
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function showClearedAccessLogEntry(Request $request, $id)
     {
@@ -248,7 +250,7 @@ class LaravelLoggerController extends BaseController
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     private static function getClearedActvity($id)
     {
@@ -265,7 +267,7 @@ class LaravelLoggerController extends BaseController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroyActivityLog(Request $request)
     {
@@ -282,7 +284,7 @@ class LaravelLoggerController extends BaseController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function restoreClearedActivityLog(Request $request)
     {

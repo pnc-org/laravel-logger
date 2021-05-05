@@ -6,7 +6,7 @@
     @push(config('LaravelLogger.bladePlacementCss'))
 @endif
 
-        @include('LaravelLogger::partials.styles')
+{{-- @include('LaravelLogger::partials.styles') --}}
 
 @if(config('LaravelLogger.bladePlacement') == 'yield')
     @endsection
@@ -19,15 +19,6 @@
 @elseif (config('LaravelLogger.bladePlacement') == 'stack')
     @push(config('LaravelLogger.bladePlacementJs'))
 @endif
-
-        @include('LaravelLogger::partials.scripts', ['activities' => $activities])
-        @include('LaravelLogger::scripts.confirm-modal', ['formTrigger' => '#confirmDelete'])
-        @include('LaravelLogger::scripts.confirm-modal', ['formTrigger' => '#confirmRestore'])
-
-        @if(config('LaravelLogger.enableDrillDown'))
-            @include('LaravelLogger::scripts.clickable-row')
-            @include('LaravelLogger::scripts.tooltip')
-        @endif
 
 @if(config('LaravelLogger.bladePlacement') == 'yield')
     @endsection
@@ -43,8 +34,8 @@
 @php
     switch (config('LaravelLogger.bootstapVersion')) {
         case '4':
-            $containerClass = 'card';
-            $containerHeaderClass = 'card-header';
+            $containerClass = 'card card-custom';
+            $containerHeaderClass = 'card-header border-0';
             $containerBodyClass = 'card-body';
             break;
         case '3':
@@ -55,7 +46,51 @@
     }
     $bootstrapCardClasses = (is_null(config('LaravelLogger.bootstrapCardClasses')) ? '' : config('LaravelLogger.bootstrapCardClasses'));
 @endphp
+@section('breadcrumbs', true)
+@section('replacementMenu')
 
+<div class="btn-group pull-right btn-group-xs dropdown">
+    <button type="button" class="btn btn-outline-primary dropdown-toggle logger-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        @lang('LaravelLogger::laravel-logger.dashboard.menu.actions')
+        <span class="sr-only">
+            {!! trans('LaravelLogger::laravel-logger.dashboard.menu.alt') !!}
+        </span>
+    </button>
+    @if(config('LaravelLogger.bootstapVersion') == '4')
+        <div class="dropdown-menu dropdown-menu-right">
+            <a href="{{route('activity')}}" class="dropdown-item btn-info">
+                <span>
+
+                    {!! trans('LaravelLogger::laravel-logger.dashboard.menu.back') !!}
+                </span>
+            </a>
+            @if($totalActivities)
+                @include('LaravelLogger::forms.delete-activity-log')
+                @include('LaravelLogger::forms.restore-activity-log')
+            @endif
+        </div>
+    @else
+        <ul class="dropdown-menu">
+            <li class="dropdown-item btn-info">
+                <a href="{{route('activity')}}">
+                    <span>
+                        {!! trans('LaravelLogger::laravel-logger.dashboard.menu.back') !!}
+                    </span>
+                </a>
+            </li>
+            @if($totalActivities)
+                <li>
+                    @include('LaravelLogger::forms.delete-activity-log')
+                </li>
+                <li >
+                    @include('LaravelLogger::forms.restore-activity-log')
+                </li>
+            @endif
+        </ul>
+    @endif
+</div>
+
+@endsection
 @section('content')
 
     <div class="container-fluid">
@@ -67,58 +102,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="{{ $containerClass }} {{ $bootstrapCardClasses }}">
-                    <div class="{{ $containerHeaderClass }}">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span>
-                                {!! trans('LaravelLogger::laravel-logger.dashboardCleared.title') !!}
-                                <sup class="label">
-                                    {{ $totalActivities }} {!! trans('LaravelLogger::laravel-logger.dashboardCleared.subtitle') !!}
-                                </sup>
-                            </span>
-                            <div class="btn-group pull-right btn-group-xs">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-ellipsis-v fa-fw" aria-hidden="true"></i>
-                                    <span class="sr-only">
-                                        {!! trans('LaravelLogger::laravel-logger.dashboard.menu.alt') !!}
-                                    </span>
-                                </button>
-                                @if(config('LaravelLogger.bootstapVersion') == '4')
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="{{route('activity')}}" class="dropdown-item">
-                                            <span class="text-primary">
-                                                <i class="fa fa-fw fa-mail-reply" aria-hidden="true"></i>
-                                                {!! trans('LaravelLogger::laravel-logger.dashboard.menu.back') !!}
-                                            </span>
-                                        </a>
-                                        @if($totalActivities)
-                                            @include('LaravelLogger::forms.delete-activity-log')
-                                            @include('LaravelLogger::forms.restore-activity-log')
-                                        @endif
-                                    </div>
-                                @else
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="{{route('activity')}}">
-                                                <span class="text-primary">
-                                                    <i class="fa fa-fw fa-mail-reply" aria-hidden="true"></i>
-                                                    {!! trans('LaravelLogger::laravel-logger.dashboard.menu.back') !!}
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @if($totalActivities)
-                                            <li>
-                                                @include('LaravelLogger::forms.delete-activity-log')
-                                            </li>
-                                            <li>
-                                                @include('LaravelLogger::forms.restore-activity-log')
-                                            </li>
-                                        @endif
-                                    </ul>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-body">
+
+                    <div class="panel-body card-body">
                         @include('LaravelLogger::logger.partials.activity-table', ['activities' => $activities, 'hoverable' => true])
                     </div>
                 </div>
@@ -128,5 +113,15 @@
 
     @include('LaravelLogger::modals.confirm-modal', ['formTrigger' => 'confirmDelete', 'modalClass' => 'danger', 'actionBtnIcon' => 'fa-trash-o'])
     @include('LaravelLogger::modals.confirm-modal', ['formTrigger' => 'confirmRestore', 'modalClass' => 'success', 'actionBtnIcon' => 'fa-check'])
+
+@endsection
+@section('scripts')
+    @include('LaravelLogger::partials.scripts', ['activities' => $activities])
+    @include('LaravelLogger::scripts.confirm-modal', ['formTrigger' => '#confirmDelete'])
+    @include('LaravelLogger::scripts.confirm-modal', ['formTrigger' => '#confirmRestore'])
+
+    @if(config('LaravelLogger.enableDrillDown'))
+        @include('LaravelLogger::scripts.clickable-row')
+    @endif
 
 @endsection
