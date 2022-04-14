@@ -88,17 +88,17 @@
     <div class="panel @if($isClearedEntry) panel-danger @else panel-default @endif">
         <div class="{{ $containerClass }} @if($isClearedEntry) panel-danger @else panel-default @endif">
             <div class="card-header">
-                <h3>@lang('general.basic_change_info')</h3>
+                <h3>@lang('LaravelLogger::laravel-logger.general.basic_change_info')</h3>
             </div>
             <div class="card-body">
                 <div class="row mt-5">
                     @if($activity->contentId)
                     <div class="col-6">
                         <div class="form-group">
-                            <label>@lang('general.module')</label>
+                            <label>@lang('LaravelLogger::laravel-logger.general.module')</label>
 
                                 <input type="text" class="form-control " name="module" disabled
-                                       value="@lang(strtolower(class_basename($activity->contentType)).'.title')" />
+                                       value="{{ class_basename($activity->contentType) }}" />
 
                         </div>
                     </div>
@@ -106,21 +106,21 @@
 
                     <div class="col-6">
                         <div class="form-group">
-                            <label>@lang('general.user')</label>
+                            <label>@lang('LaravelLogger::laravel-logger.general.user')</label>
                             <input type="text" class="form-control " name="user" disabled
                                 value="{{ $userLabel }}" />
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label>@lang('general.description')</label>
+                            <label>@lang('LaravelLogger::laravel-logger.general.description')</label>
                             <input type="text" class="form-control " name="description" disabled
                                 value="{{ $activity->description }}" />
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label>@lang('general.time')</label>
+                            <label>@lang('LaravelLogger::laravel-logger.general.time')</label>
                             <input type="text" class="form-control " name="time" disabled
                                 value="  {{ $activity->created_at->format('d.m.Y. / H:i') }}" />
                         </div>
@@ -130,15 +130,15 @@
                     @if ($activity->contentId)
                     <div class="col-6">
                         <div class="form-group">
-                            <label>@lang('general.details')</label>
+                            <label>@lang('LaravelLogger::laravel-logger.general.details')</label>
                             <textarea type="text" class="form-control form-control--preLine" name="details" rows="5" disabled>
                                 @foreach ($details as $key => $detail)
                                     @if (!is_iterable($detail))
                                         @if ($key == "disabled_at")
                                             @if ($detail)
-                                                @lang('general.' .$key) &#13;
+                                                @lang('LaravelLogger::laravel-logger.general.' .$key) &#13;
                                             @else
-                                                @lang('general.enabled') &#13;
+                                                @lang('LaravelLogger::laravel-logger.general.enabled') &#13;
                                             @endif
                                         @elseif ($key !== "updated_at" && $key !== "created_at")
                                             @lang(strtolower(class_basename($activity->contentType)). '.' .$key) : {{$detail}} &#13;
@@ -162,7 +162,7 @@
 
             @if(!$isClearedEntry)
             <div class="card-header">
-                <h3>@lang('general.other_activity')</h3>
+                <h3>@lang('LaravelLogger::laravel-logger.general.other_activity')</h3>
             </div>
 
             <div class="activity-log-table-container card-body card-body-custom">

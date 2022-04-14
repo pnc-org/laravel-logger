@@ -38,9 +38,11 @@ return [
         'labels'    => [
             'id'            => 'Id',
             'time'          => 'Time',
+            'item'          => 'Item',
             'description'   => 'Description',
             'user'          => 'User',
             'method'        => 'Method',
+            'module'        => 'Module',
             'route'         => 'Route',
             'ipAddress'     => 'Ip <span class="hidden-sm hidden-xs">Address</span>',
             'agent'         => '<span class="hidden-sm hidden-xs">User </span>Agent',
@@ -168,6 +170,20 @@ return [
             'deleteAll'  => 'Delete All Activity Logs',
             'restoreAll' => 'Restore All Activity Logs',
         ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Laravel Logger General Log Item Lines
+    |--------------------------------------------------------------------------
+    */
+    'general' => [
+        'module' => 'Module',
+        'user' => 'User',
+        'description' => 'Description',
+        'time' => 'Datetime',
+        'details' => 'Details',
+        'other_activity' => 'Other activities',
     ],
 
     /*
