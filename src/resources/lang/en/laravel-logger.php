@@ -178,6 +178,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'general' => [
+        'basic_change_info' => 'Basic log info',
         'module' => 'Module',
         'user' => 'User',
         'description' => 'Description',
