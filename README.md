@@ -78,7 +78,7 @@ Register the package with laravel in `config/app.php` under `providers` with the
 
 ```php
     'providers' => [
-        pnc-org\LaravelLogger\LaravelLoggerServiceProvider::class,
+        Notus\LaravelLogger\LaravelLoggerServiceProvider::class,
     ];
 ```
 

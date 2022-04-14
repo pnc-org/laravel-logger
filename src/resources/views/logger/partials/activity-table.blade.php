@@ -32,7 +32,7 @@ if (Request::is('activity/cleared')) {
                     {!! trans('LaravelLogger::laravel-logger.dashboard.labels.time') !!}
                 </th>
 
-                @if(Request::is('activity/cleared'))
+                @if (Request::is('activity/cleared'))
                     <th>
                         <i class="fa fa-trash-o fa-fw" aria-hidden="true"></i>
                         {!! trans('LaravelLogger::laravel-logger.dashboard.labels.deleteDate') !!}
@@ -41,14 +41,14 @@ if (Request::is('activity/cleared')) {
             </tr>
         </thead>
         <tbody>
-            @foreach($activities as $activity)
-                <tr class="clickable-row" data-href="{{ url($prependUrl . $activity->id) }}" >
+            @foreach ($activities as $activity)
+                <tr class="clickable-row" data-href="{{ url($prependUrl . $activity->id) }}">
                     <td class="font-weight-bold">
                         @php
                             switch ($activity->userType) {
                                 case trans('LaravelLogger::laravel-logger.userTypes.registered'):
                                     // $userTypeClass = 'success';
-                                    $userLabel = $activity->userDetails['first_name']. ' '.$activity->userDetails['last_name'];
+                                    $userLabel = $activity->userDetails['first_name'] . ' ' . $activity->userDetails['last_name'];
                                     break;
 
                                 case trans('LaravelLogger::laravel-logger.userTypes.externalSource'):
@@ -64,38 +64,37 @@ if (Request::is('activity/cleared')) {
                             }
 
                         @endphp
-                        <span class="{{--badge badge-{{$userTypeClass}}--}}">
-                            {{$userLabel}}
+                        <span class="{{-- badge badge-{{$userTypeClass}} --}}">
+                            {{ $userLabel }}
                         </span>
                     </td>
                     <td class="font-weight-bold">
                         {{ $activity->description }}
                     </td>
                     <td title="{{ $activity->created_at }}" class="font-weight-bold">
-                        @if(config('LaravelLogger.hideLogRequest'))
-                        @lang(strtolower(class_basename($activity->contentType)).'.title')
+                        @if (config('LaravelLogger.hideLogRequest'))
+                            {{ class_basename($activity->contentType) }}
                         @endif
                     </td>
                     <td title="{{ $activity->created_at }}" class="font-weight-bold">
                         {{ $activity->created_at->format('d.m.Y. / H:i') }}
                     </td>
 
-                    @if(Request::is('activity/cleared'))
+                    @if (Request::is('activity/cleared'))
                         <td>
                             {{ $activity->deleted_at }}
                         </td>
                     @endif
                 </tr>
-                {{-- @dump($activity->toArray()) --}}
             @endforeach
         </tbody>
     </table>
 </div>
 
-@if(config('LaravelLogger.loggerPaginationEnabled'))
+@if (config('LaravelLogger.loggerPaginationEnabled'))
     <div class="text-center">
         <div class="d-flex justify-content-start activity-pagination">
-            {!! $activities->links('LaravelLogger::logger.partials.pagination')->render() !!}
+            {!! $activities->render() !!}
 
         </div>
 
