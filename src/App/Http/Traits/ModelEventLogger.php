@@ -1,61 +1,59 @@
 <?php
 
-namespace pncOrg\LaravelLogger\App\Http\Traits;
+namespace Notus\LaravelLogger\App\Http\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
-use pncOrg\LaravelLogger\App\Models\Activity;
 use ReflectionClass;
 
 /**
- * Class ModelEventLogger
- *  Automatically Log Add, Update, Delete events of Model.
+ * Automatically Log Add, Update, Delete events of Model.
  */
 trait ModelEventLogger
 {
-	/**
-	 * Automatically boot with Model, and register Events handler.
-	 */
-	protected static function bootModelEventLogger()
-	{
-		foreach (static::getRecordActivityEvents() as $eventName) {
-			static::$eventName(function (Model $model) use ($eventName) {
-				try {
-					$reflect = new ReflectionClass($model);
+    /**
+     * Boot and register event handler
+     *
+     * @return void
+     */
+    protected static function bootModelEventLogger()
+    {
+        foreach (static::getRecordActivityEvents() as $eventName) {
+            static::$eventName(function (Model $model) use ($eventName) {
+                try {
+                    $reflect = new ReflectionClass($model);
 
-					$userType = trans('LaravelLogger::laravel-logger.userTypes.externalSource');
-					$userId = null;
+                    $userType = trans('LaravelLogger::laravel-logger.userTypes.externalSource');
+                    $userId = null;
 
-					if (Auth::check()) {
-						$userType = trans('LaravelLogger::laravel-logger.userTypes.registered');
-						$userIdField = config('LaravelLogger.defaultUserIDField');
-						$userId = Request::user()->{$userIdField};
-					}
+                    if (Auth::check()) {
+                        $userType = trans('LaravelLogger::laravel-logger.userTypes.registered');
+                        $userIdField = config('LaravelLogger.defaultUserIDField');
+                        $userId = Request::user()->{$userIdField};
+                    }
 
-					$data = [
-						'description'   => ucfirst($eventName) . " a " . $reflect->getShortName(),
-						'details'       => json_encode($model->getDirty()),
-						'userType'      => $userType,
-						'userId'        => $userId,
-						'contentId'   	=> $model->id,
-						'contentType' 	=> get_class($model),
-						'route'         => Request::fullUrl(),
-						'ipAddress'     => Request::ip(),
-						'locale'        => Request::header('accept-language'),
-						'referer'       => Request::header('referer'),
-						'methodType'    => Request::method(),
-					];
+                    $data = [
+                        'description'   => ucfirst($eventName) . " a " . $reflect->getShortName(),
+                        'details'       => json_encode($model->getDirty()),
+                        'userType'      => $userType,
+                        'userId'        => $userId,
+                        'contentId'       => $model->id,
+                        'contentType'     => get_class($model),
+                        'route'         => Request::fullUrl(),
+                        'ipAddress'     => Request::ip(),
+                        'locale'        => Request::header('accept-language'),
+                        'referer'       => Request::header('referer'),
+                        'methodType'    => Request::method(),
+                    ];
 
-					Activity::create($data);
-
-				} catch (\Exception $e) {
-					return true;
-				}
-			});
-		}
-
-	}
+                    config('LaravelLogger.defaultActivityModel')::create($data);
+                } catch (\Exception $e) {
+                    return true;
+                }
+            });
+        }
+    }
 
     /**
      * Set the default events to be recorded if the $recordEvents

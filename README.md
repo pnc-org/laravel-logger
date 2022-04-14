@@ -115,7 +115,7 @@ LARAVEL_LOGGER_ROLES_ENABLED=true
 LARAVEL_LOGGER_ROLES_MIDDLWARE=role:admin
 LARAVEL_LOGGER_MIDDLEWARE_ENABLED=true
 LARAVEL_LOGGER_MIDDLEWARE_EXCEPT=
-LARAVEL_LOGGER_ACTIVITY_MODEL=pncOrg\LaravelLogger\App\Models\Activity
+LARAVEL_LOGGER_ACTIVITY_MODEL=Notus\LaravelLogger\App\Models\Activity
 LARAVEL_LOGGER_USER_MODEL=App\User
 LARAVEL_LOGGER_USER_ID_FIELD=id
 LARAVEL_LOGGER_DISABLE_ROUTES=false
@@ -173,7 +173,7 @@ To use the trait:
 1. Include the call in the head of your class file:
 
     ```php
-        use pncOrg\LaravelLogger\App\Http\Traits\ActivityLogger;
+        use Notus\LaravelLogger\App\Http\Traits\ActivityLogger;
     ```
 
 2. Include the trait call in the opening of your class:
@@ -214,7 +214,7 @@ If you are on an existing install, you will also need update your `laravel-logge
 You can then add the routes directly to your application's `routes/web.php` file, and customise as required.
 
 ```php
-Route::group(['prefix' => 'activity', 'namespace' => 'pncOrg\LaravelLogger\App\Http\Controllers', 'middleware' => ['web', 'auth', 'activity']], function () {
+Route::group(['prefix' => 'activity', 'namespace' => 'Notus\LaravelLogger\App\Http\Controllers', 'middleware' => ['web', 'auth', 'activity']], function () {
 
     // Dashboards
     Route::get('/', 'LaravelLoggerController@showAccessLog')->name('activity');
@@ -242,7 +242,7 @@ LARAVEL_LOGGER_ENABLE_SEARCH=true
 // you can customize your search using these options [description,user,method,route,ip]
 LARAVEL_LOGGER_SEARCH_FIELDS=description,user,method,route,ip
 ```
-by default all search fields are enabled when you enable the search with this one line configuration 
+by default all search fields are enabled when you enable the search with this one line configuration
 ```
 LARAVEL_LOGGER_SEARCH_ENABLE=true
 ```

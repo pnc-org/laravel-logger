@@ -1,11 +1,11 @@
 <?php
 
-namespace pncOrg\LaravelLogger;
+namespace Notus\LaravelLogger;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use pncOrg\LaravelLogger\App\Http\Middleware\LogActivity;
+use Notus\LaravelLogger\App\Http\Middleware\LogActivity;
 
 class LaravelLoggerServiceProvider extends ServiceProvider
 {
@@ -26,31 +26,31 @@ class LaravelLoggerServiceProvider extends ServiceProvider
     protected $listeners = [
 
         'Illuminate\Auth\Events\Attempting' => [
-            'pncOrg\LaravelLogger\App\Listeners\LogAuthenticationAttempt',
+            'Notus\LaravelLogger\App\Listeners\LogAuthenticationAttempt',
         ],
 
         'Illuminate\Auth\Events\Authenticated' => [
-            'pncOrg\LaravelLogger\App\Listeners\LogAuthenticated',
+            'Notus\LaravelLogger\App\Listeners\LogAuthenticated',
         ],
 
         'Illuminate\Auth\Events\Login' => [
-            'pncOrg\LaravelLogger\App\Listeners\LogSuccessfulLogin',
+            'Notus\LaravelLogger\App\Listeners\LogSuccessfulLogin',
         ],
 
         'Illuminate\Auth\Events\Failed' => [
-            'pncOrg\LaravelLogger\App\Listeners\LogFailedLogin',
+            'Notus\LaravelLogger\App\Listeners\LogFailedLogin',
         ],
 
         'Illuminate\Auth\Events\Logout' => [
-            'pncOrg\LaravelLogger\App\Listeners\LogSuccessfulLogout',
+            'Notus\LaravelLogger\App\Listeners\LogSuccessfulLogout',
         ],
 
         'Illuminate\Auth\Events\Lockout' => [
-            'pncOrg\LaravelLogger\App\Listeners\LogLockout',
+            'Notus\LaravelLogger\App\Listeners\LogLockout',
         ],
 
         'Illuminate\Auth\Events\PasswordReset' => [
-            'pncOrg\LaravelLogger\App\Listeners\LogPasswordReset',
+            'Notus\LaravelLogger\App\Listeners\LogPasswordReset',
         ],
 
     ];
@@ -63,7 +63,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         $router->middlewareGroup('activity', [LogActivity::class]);
-        $this->loadTranslationsFrom(__DIR__.'/resources/lang/', 'LaravelLogger');
+        $this->loadTranslationsFrom(__DIR__ . '/resources/lang/', 'LaravelLogger');
     }
 
     /**
@@ -76,15 +76,15 @@ class LaravelLoggerServiceProvider extends ServiceProvider
         if (file_exists(config_path('laravel-logger.php'))) {
             $this->mergeConfigFrom(config_path('laravel-logger.php'), 'LaravelLogger');
         } else {
-            $this->mergeConfigFrom(__DIR__.'/config/laravel-logger.php', 'LaravelLogger');
+            $this->mergeConfigFrom(__DIR__ . '/config/laravel-logger.php', 'LaravelLogger');
         }
 
         if (config(self::DISABLE_DEFAULT_ROUTES_CONFIG) == false) {
-            $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+            $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
         }
 
-        $this->loadViewsFrom(__DIR__.'/resources/views/', 'LaravelLogger');
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        $this->loadViewsFrom(__DIR__ . '/resources/views/', 'LaravelLogger');
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
         $this->registerEventListeners();
         $this->publishFiles();
@@ -128,15 +128,15 @@ class LaravelLoggerServiceProvider extends ServiceProvider
         $publishTag = 'LaravelLogger';
 
         $this->publishes([
-            __DIR__.'/config/laravel-logger.php' => base_path('config/laravel-logger.php'),
+            __DIR__ . '/config/laravel-logger.php' => base_path('config/laravel-logger.php'),
         ], $publishTag);
 
         $this->publishes([
-            __DIR__.'/resources/views' => base_path('resources/views/vendor/'.$publishTag),
+            __DIR__ . '/resources/views' => base_path('resources/views/vendor/' . $publishTag),
         ], $publishTag);
 
         $this->publishes([
-            __DIR__.'/resources/lang' => base_path('resources/lang/vendor/'.$publishTag),
+            __DIR__ . '/resources/lang' => base_path('resources/lang/vendor/' . $publishTag),
         ], $publishTag);
     }
 }

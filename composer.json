@@ -1,46 +1,38 @@
 {
-    "name": "pnc-org/laravel-logger",
-    "description": "Laravel Logger Package",
-    "keywords": [
-            "Laravel activity",
-            "Laravel activity logger",
-            "Laravel activity log",
-            "Laravel logger",
-            "Laravel log"
-        ],
-    "license": "MIT",
-    "type": "package",
-    "authors": [
-        {
-            "name": "notus",
-            "email": "info@notus.hr"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {
-        "php": ">=7.3.0|^8.0",
-        "ext-json": "*",
-        "illuminate/database": "^8",
-        "jaybizzle/laravel-crawler-detect": "1.*",
-        "laravelcollective/html": "^5.4|^5.5|^5.6|^5.7|^5.8|^6.0|^7.0|^8.0"
+  "name": "pnc-org/laravel-logger",
+  "description": "Laravel Logger Package",
+  "license": "MIT",
+  "type": "package",
+  "authors": [
+    {
+      "name": "notus"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.3.0|^8.0",
+    "ext-json": "*",
+    "illuminate/database": "^8",
+    "jaybizzle/laravel-crawler-detect": "1.*",
+    "laravelcollective/html": "^5.4|^5.5|^5.6|^5.7|^5.8|^6.0|^7.0|^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Notus\\LaravelLogger\\": "src/"
     },
-    "autoload": {
-        "psr-4": {
-            "pncOrg\\LaravelLogger\\": "src/"
-        },
-        "files": [
-            "src/App/Logic/helpers.php"
-        ]
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "pncOrg\\LaravelLogger\\LaravelLoggerServiceProvider"
-            ]
-        }
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "stable"
+    "files": [
+      "src/App/Logic/helpers.php"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Notus\\LaravelLogger\\LaravelLoggerServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "stable"
 }

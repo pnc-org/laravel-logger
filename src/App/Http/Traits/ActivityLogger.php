@@ -1,6 +1,6 @@
 <?php
 
-namespace pncOrg\LaravelLogger\App\Http\Traits;
+namespace Notus\LaravelLogger\App\Http\Traits;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -32,7 +32,7 @@ trait ActivityLogger
         if (Crawler::isCrawler()) {
             $userType = trans('LaravelLogger::laravel-logger.userTypes.crawler');
             if (is_null($description)) {
-                $description = $userType.' '.trans('LaravelLogger::laravel-logger.verbTypes.crawled').' '.Request::fullUrl();
+                $description = $userType . ' ' . trans('LaravelLogger::laravel-logger.verbTypes.crawled') . ' ' . Request::fullUrl();
             }
         }
 
@@ -57,28 +57,28 @@ trait ActivityLogger
                     break;
             }
 
-            $description = $verb.' '.Request::path();
+            $description = $verb . ' ' . Request::path();
         }
 
-		$data = [
-			'description'   => $description,
-			'details'       => $details,
-			'userType'      => $userType,
-			'userId'        => $userId,
-			'route'         => Request::fullUrl(),
-			'ipAddress'     => Request::ip(),
-			'userAgent'     => Request::header('user-agent'),
-			'locale'        => Request::header('accept-language'),
-			'referer'       => Request::header('referer'),
-			'methodType'    => Request::method(),
-		];
+        $data = [
+            'description'   => $description,
+            'details'       => $details,
+            'userType'      => $userType,
+            'userId'        => $userId,
+            'route'         => Request::fullUrl(),
+            'ipAddress'     => Request::ip(),
+            'userAgent'     => Request::header('user-agent'),
+            'locale'        => Request::header('accept-language'),
+            'referer'       => Request::header('referer'),
+            'methodType'    => Request::method(),
+        ];
 
         // Validation Instance
         $validator = Validator::make($data, config('laravel-logger.defaultActivityModel')::rules());
         if ($validator->fails()) {
             $errors = self::prepareErrorMessage($validator->errors(), $data);
             if (config('LaravelLogger.logDBActivityLogFailuresToFile')) {
-                Log::error('Failed to record activity event. Failed Validation: '.$errors);
+                Log::error('Failed to record activity event. Failed Validation: ' . $errors);
             }
         } else {
             self::storeActivity($data);

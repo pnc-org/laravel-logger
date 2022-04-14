@@ -1,10 +1,10 @@
 <?php
 
-namespace pncOrg\LaravelLogger\App\Http\Middleware;
+namespace Notus\LaravelLogger\App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use pncOrg\LaravelLogger\App\Http\Traits\ActivityLogger;
+use Notus\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class LogActivity
 {

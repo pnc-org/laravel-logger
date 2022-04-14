@@ -1,6 +1,6 @@
 <?php
 
-namespace pncOrg\LaravelLogger\App\Http\Controllers;
+namespace Notus\LaravelLogger\App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -9,8 +9,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
-use pncOrg\LaravelLogger\App\Http\Traits\IpAddressDetails;
-use pncOrg\LaravelLogger\App\Http\Traits\UserAgentDetails;
+use Notus\LaravelLogger\App\Http\Traits\IpAddressDetails;
+use Notus\LaravelLogger\App\Http\Traits\UserAgentDetails;
 
 class LaravelLoggerController extends BaseController
 {

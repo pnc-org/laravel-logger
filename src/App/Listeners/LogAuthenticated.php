@@ -1,9 +1,9 @@
 <?php
 
-namespace pncOrg\LaravelLogger\App\Listeners;
+namespace Notus\LaravelLogger\App\Listeners;
 
 use Illuminate\Auth\Events\Authenticated;
-use pncOrg\LaravelLogger\App\Http\Traits\ActivityLogger;
+use Notus\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class LogAuthenticated
 {

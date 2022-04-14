@@ -63,7 +63,7 @@ return [
 	|--------------------------------------------------------------------------
 	*/
 
-	'defaultActivityModel' => env('LARAVEL_LOGGER_ACTIVITY_MODEL', 'pncOrg\LaravelLogger\App\Models\Activity'),
+	'defaultActivityModel' => env('LARAVEL_LOGGER_ACTIVITY_MODEL', 'Notus\LaravelLogger\App\Models\Activity'),
 	'defaultUserModel'     => env('LARAVEL_LOGGER_USER_MODEL', 'App\Models\User'),
 
 	/*
